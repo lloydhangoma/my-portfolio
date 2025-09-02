@@ -15,6 +15,8 @@ class Hero(models.Model):
     full_name = models.CharField(max_length=255, null=True, blank=True)
     title = models.CharField(max_length=255, null=True, blank=True)
     bio = models.TextField(null=True, blank=True)
+    # New field to store the resume URL
+    resume_url = models.URLField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
@@ -123,6 +125,9 @@ class Sections(models.Model):
     skills = models.BooleanField(default=True)
     process = models.BooleanField(default=True)
     get_in_touch = models.BooleanField(default=True)
+    # Add new fields for the blog and achievements sections
+    blog = models.BooleanField(default=True)
+    achievements = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = 'Sections'
@@ -136,3 +141,29 @@ class Message(models.Model):
 
     def __str__(self):
         return f'{self.name}'
+
+# New models for the Blog and Achievements sections
+class BlogPost(models.Model):
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+    author = models.CharField(max_length=255, null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ['-created']
+
+class Achievement(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField(null=True, blank=True)
+    award_date = models.DateField(null=True, blank=True)
+    is_active = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ['-award_date']

@@ -3,17 +3,19 @@ from .models import *
 
 def index(request):
     
-
     metadata = MetaData.objects.filter(is_active=True).first()
     hero = Hero.objects.filter(is_active=True).first()
     about = About.objects.filter(is_active=True).first()
     process = Process.objects.filter(is_active=True).first()
     skillgroups = SlkillGroup.objects.filter(is_active=True)
     projects = Project.objects.filter(is_active=True)
+    blog_posts = BlogPost.objects.filter(is_active=True)
+    achievements = Achievement.objects.filter(is_active=True)
     get_in_touch = GetInTouch.objects.filter(is_active=True).first()
     sections = Sections.objects.all().first()
     context = {'metadata': metadata, 'hero': hero, 'about': about,
             'process': process, 'skillgroups': skillgroups, 'projects': projects,
+            'blog_posts': blog_posts, 'achievements': achievements,
             'get_in_touch': get_in_touch, 'sections': sections}
     
     if request.method == 'POST':

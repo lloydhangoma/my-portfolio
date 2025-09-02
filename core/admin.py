@@ -120,13 +120,13 @@ class MetaDataAdmin(SingletonModelAdmin):
 
 @admin.register(Hero)
 class HeroAdmin(SingletonModelAdmin):
-    list_display = ('full_name', 'title', 'greeting_preview', 'bio_preview')
+    list_display = ('full_name', 'title', 'greeting_preview', 'bio_preview', 'resume_url_preview')
     list_filter = (ActiveFilter,)
     search_fields = ('full_name', 'title', 'greeting', 'bio')
     
     fieldsets = (
         ('Hero Information', {
-            'fields': ('greeting', 'full_name', 'title'),
+            'fields': ('greeting', 'full_name', 'title', 'resume_url'),
             'description': 'Main hero section content displayed on homepage'
         }),
         ('Biography', {
@@ -151,6 +151,13 @@ class HeroAdmin(SingletonModelAdmin):
             return format_html('<span title="{}">{}</span>', obj.bio, truncated)
         return format_html('<span style="color: #999;">No bio</span>')
     bio_preview.short_description = 'Biography'
+    
+    def resume_url_preview(self, obj):
+        if obj.resume_url:
+            return format_html('<a href="{}" target="_blank">🔗 View Resume</a>', obj.resume_url)
+        return format_html('<span style="color: #999;">No URL</span>')
+    resume_url_preview.short_description = 'Resume URL'
+
 
 @admin.register(About)
 class AboutAdmin(SingletonModelAdmin):
@@ -544,4 +551,17 @@ def custom_admin_css():
     </style>
     """
 
-# You can add this to your base template or create a custom admin template
+# You can add this to your base template or create a custom admin template.
+
+# Registering the new Blog and Achievement models
+@admin.register(BlogPost)
+class BlogPostAdmin(admin.ModelAdmin):
+    list_display = ('title', 'author', 'created', 'is_active')
+    search_fields = ('title', 'content')
+    list_filter = ('is_active', 'author')
+    
+@admin.register(Achievement)
+class AchievementAdmin(admin.ModelAdmin):
+    list_display = ('title', 'award_date', 'is_active')
+    list_filter = ('is_active', 'award_date')
+    search_fields = ('title', 'description')
