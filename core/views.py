@@ -1,5 +1,12 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 from .models import *
+
+def health_check(request):
+    """
+    A simple view to respond to Render's health checks.
+    """
+    return HttpResponse("OK", status=200)
 
 def index(request):
     
