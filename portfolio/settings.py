@@ -28,19 +28,17 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 debug = os.getenv('DEBUG')
 DEBUG = True if debug == 'True' else False
-
-# You must add your Render URL to ALLOWED_HOSTS for it to work.
+# You must add your Render URL and PythonAnywhere URL to ALLOWED_HOSTS for it to work.
 # We also include a check for the RENDER_EXTERNAL_HOSTNAME environment variable.
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'my-portfolio-a77w.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'my-portfolio-a77w.onrender.com', 'mrlloyd.pythonanywhere.com']
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 # CSRF_TRUSTED_ORIGINS is also required for production.
-CSRF_TRUSTED_ORIGINS = ['https://my-portfolio-a77w.onrender.com']
+CSRF_TRUSTED_ORIGINS = ['https://my-portfolio-a77w.onrender.com', 'https://mrlloyd.pythonanywhere.com']
 if RENDER_EXTERNAL_HOSTNAME:
     CSRF_TRUSTED_ORIGINS.append('https://' + RENDER_EXTERNAL_HOSTNAME)
-
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
